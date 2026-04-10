@@ -3,13 +3,24 @@ info:
   # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
-  description: API specification
+  description: QProcure Quantum Decision Intelligence Platform API
 servers:
   - url: /api
     description: Base API path
 tags:
   - name: health
     description: Health operations
+  - name: suppliers
+    description: Supplier management
+  - name: inventory
+    description: Inventory management
+  - name: sales
+    description: Sales management
+  - name: quantum
+    description: Quantum optimization engine
+  - name: dashboard
+    description: Dashboard aggregates
+
 paths:
   /healthz:
     get:
@@ -24,6 +35,271 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+
+  /suppliers:
+    get:
+      operationId: getSuppliers
+      tags: [suppliers]
+      summary: List all suppliers
+      responses:
+        "200":
+          description: List of suppliers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Supplier"
+    post:
+      operationId: createSupplier
+      tags: [suppliers]
+      summary: Create a supplier
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateSupplierBody"
+      responses:
+        "201":
+          description: Created supplier
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Supplier"
+
+  /suppliers/{id}:
+    get:
+      operationId: getSupplier
+      tags: [suppliers]
+      summary: Get a supplier by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Supplier
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Supplier"
+        "404":
+          description: Not found
+    put:
+      operationId: updateSupplier
+      tags: [suppliers]
+      summary: Update a supplier
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateSupplierBody"
+      responses:
+        "200":
+          description: Updated supplier
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Supplier"
+    delete:
+      operationId: deleteSupplier
+      tags: [suppliers]
+      summary: Delete a supplier
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Deleted
+
+  /inventory:
+    get:
+      operationId: getInventory
+      tags: [inventory]
+      summary: List inventory items
+      responses:
+        "200":
+          description: List of inventory items
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/InventoryItem"
+    post:
+      operationId: createInventoryItem
+      tags: [inventory]
+      summary: Create an inventory item
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateInventoryItemBody"
+      responses:
+        "201":
+          description: Created inventory item
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InventoryItem"
+
+  /inventory/{id}:
+    put:
+      operationId: updateInventoryItem
+      tags: [inventory]
+      summary: Update an inventory item
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateInventoryItemBody"
+      responses:
+        "200":
+          description: Updated item
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InventoryItem"
+    delete:
+      operationId: deleteInventoryItem
+      tags: [inventory]
+      summary: Delete an inventory item
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Deleted
+
+  /sales:
+    get:
+      operationId: getSales
+      tags: [sales]
+      summary: List all sales records
+      responses:
+        "200":
+          description: List of sales
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/SaleRecord"
+    post:
+      operationId: createSale
+      tags: [sales]
+      summary: Create a sales record
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateSaleBody"
+      responses:
+        "201":
+          description: Created sale
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SaleRecord"
+
+  /sales/{id}:
+    delete:
+      operationId: deleteSale
+      tags: [sales]
+      summary: Delete a sale record
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Deleted
+
+  /quantum/optimize:
+    post:
+      operationId: runQuantumOptimization
+      tags: [quantum]
+      summary: Run quantum optimization algorithm
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/QuantumOptimizeRequest"
+      responses:
+        "200":
+          description: Quantum optimization result
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/QuantumOptimizeResult"
+
+  /quantum/status:
+    get:
+      operationId: getQuantumStatus
+      tags: [quantum]
+      summary: Get quantum backend status
+      responses:
+        "200":
+          description: Quantum status
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/QuantumStatus"
+
+  /dashboard/summary:
+    get:
+      operationId: getDashboardSummary
+      tags: [dashboard]
+      summary: Get dashboard KPI summary
+      responses:
+        "200":
+          description: Dashboard summary
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DashboardSummary"
+
+  /dashboard/trends:
+    get:
+      operationId: getDashboardTrends
+      tags: [dashboard]
+      summary: Get time-series trends for dashboard charts
+      responses:
+        "200":
+          description: Trend data
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DashboardTrends"
+
 components:
   schemas:
     HealthStatus:
@@ -34,3 +310,325 @@ components:
       required:
         - status
 
+    Supplier:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        cost:
+          type: number
+        riskScore:
+          type: number
+        deliveryTime:
+          type: number
+        createdAt:
+          type: string
+      required:
+        - id
+        - name
+        - cost
+        - riskScore
+        - deliveryTime
+        - createdAt
+
+    CreateSupplierBody:
+      type: object
+      properties:
+        name:
+          type: string
+        cost:
+          type: number
+        riskScore:
+          type: number
+        deliveryTime:
+          type: number
+      required:
+        - name
+        - cost
+        - riskScore
+        - deliveryTime
+
+    InventoryItem:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        quantity:
+          type: integer
+        cost:
+          type: number
+        lowStockThreshold:
+          type: integer
+        createdAt:
+          type: string
+      required:
+        - id
+        - name
+        - quantity
+        - cost
+        - lowStockThreshold
+        - createdAt
+
+    CreateInventoryItemBody:
+      type: object
+      properties:
+        name:
+          type: string
+        quantity:
+          type: integer
+        cost:
+          type: number
+        lowStockThreshold:
+          type: integer
+      required:
+        - name
+        - quantity
+        - cost
+        - lowStockThreshold
+
+    SaleRecord:
+      type: object
+      properties:
+        id:
+          type: integer
+        product:
+          type: string
+        quantity:
+          type: integer
+        revenue:
+          type: number
+        createdAt:
+          type: string
+      required:
+        - id
+        - product
+        - quantity
+        - revenue
+        - createdAt
+
+    CreateSaleBody:
+      type: object
+      properties:
+        product:
+          type: string
+        quantity:
+          type: integer
+        revenue:
+          type: number
+      required:
+        - product
+        - quantity
+        - revenue
+
+    QuantumOptimizeRequest:
+      type: object
+      properties:
+        supplierIds:
+          type: array
+          items:
+            type: integer
+        budget:
+          type: number
+        algorithm:
+          type: string
+      required:
+        - supplierIds
+        - budget
+
+    QuantumMetrics:
+      type: object
+      properties:
+        qubits:
+          type: integer
+        depth:
+          type: integer
+        shots:
+          type: integer
+        backend:
+          type: string
+        executionTime:
+          type: string
+      required:
+        - qubits
+        - depth
+        - shots
+        - backend
+        - executionTime
+
+    SelectedSupplier:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        cost:
+          type: number
+        riskScore:
+          type: number
+        deliveryTime:
+          type: number
+      required:
+        - id
+        - name
+        - cost
+        - riskScore
+        - deliveryTime
+
+    ProbabilityEntry:
+      type: object
+      properties:
+        bitstring:
+          type: string
+        probability:
+          type: number
+      required:
+        - bitstring
+        - probability
+
+    ConvergencePoint:
+      type: object
+      properties:
+        iteration:
+          type: integer
+        cost:
+          type: number
+      required:
+        - iteration
+        - cost
+
+    QuantumOptimizeResult:
+      type: object
+      properties:
+        algorithmUsed:
+          type: string
+        algorithmReason:
+          type: string
+        bestSolution:
+          type: string
+        selectedSuppliers:
+          type: array
+          items:
+            $ref: "#/components/schemas/SelectedSupplier"
+        totalCost:
+          type: number
+        classicalCost:
+          type: number
+        improvement:
+          type: string
+        confidence:
+          type: number
+        probabilities:
+          type: array
+          items:
+            $ref: "#/components/schemas/ProbabilityEntry"
+        convergence:
+          type: array
+          items:
+            $ref: "#/components/schemas/ConvergencePoint"
+        quantumMetrics:
+          $ref: "#/components/schemas/QuantumMetrics"
+        codeSnippet:
+          type: string
+        circuitDiagram:
+          type: string
+        statevectorAmplitudes:
+          type: array
+          items:
+            type: number
+      required:
+        - algorithmUsed
+        - algorithmReason
+        - bestSolution
+        - selectedSuppliers
+        - totalCost
+        - classicalCost
+        - improvement
+        - confidence
+        - probabilities
+        - convergence
+        - quantumMetrics
+        - codeSnippet
+        - circuitDiagram
+        - statevectorAmplitudes
+
+    QuantumStatus:
+      type: object
+      properties:
+        available:
+          type: boolean
+        backend:
+          type: string
+        version:
+          type: string
+        message:
+          type: string
+      required:
+        - available
+        - backend
+        - version
+        - message
+
+    DashboardSummary:
+      type: object
+      properties:
+        totalInventoryValue:
+          type: number
+        activeSuppliers:
+          type: integer
+        salesRevenue:
+          type: number
+        optimizationSavings:
+          type: number
+        inventoryItems:
+          type: integer
+        totalSales:
+          type: integer
+        lowStockItems:
+          type: integer
+      required:
+        - totalInventoryValue
+        - activeSuppliers
+        - salesRevenue
+        - optimizationSavings
+        - inventoryItems
+        - totalSales
+        - lowStockItems
+
+    TrendPoint:
+      type: object
+      properties:
+        date:
+          type: string
+        value:
+          type: number
+        label:
+          type: string
+      required:
+        - date
+        - value
+        - label
+
+    DashboardTrends:
+      type: object
+      properties:
+        inventoryTrend:
+          type: array
+          items:
+            $ref: "#/components/schemas/TrendPoint"
+        salesTrend:
+          type: array
+          items:
+            $ref: "#/components/schemas/TrendPoint"
+        costComparison:
+          type: array
+          items:
+            $ref: "#/components/schemas/TrendPoint"
+      required:
+        - inventoryTrend
+        - salesTrend
+        - costComparison
