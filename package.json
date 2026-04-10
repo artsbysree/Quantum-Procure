@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "build": "cd client && pnpm run build",
-    "dev": "cd client && pnpm run dev"
+    "build": "next build",
+    "dev": "next dev"
   }
 }
