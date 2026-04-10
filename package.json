@@ -1,6 +1,9 @@
 {
   "scripts": {
-    "build": "next build",
+    "build": "cd client && pnpm run build",
     "dev": "next dev"
+  },
+  "dependencies": {
+    "next": "14.0.0"
   }
 }
