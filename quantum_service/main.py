@@ -27,7 +27,13 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
+@app.get("/")
+async def root():
+    return {
+        "message": "Quantum Procure API is online",
+        "endpoints": ["/quantum/health", "/quantum/status", "/quantum/optimize"],
+        "docs": "/docs"
+    }
 
 class SupplierInput(BaseModel):
     id: int
