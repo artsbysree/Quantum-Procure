@@ -4,6 +4,6 @@
     "dev": "next dev"
   },
   "dependencies": {
-    "next": next@15.x
+    "next": "^15.0.0"   
   }
 }
