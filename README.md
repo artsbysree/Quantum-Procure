@@ -1,5 +1,5 @@
 # ⚛️ Quantum Procure 
-https://quantum-procure--sreedivya8472.replit.app/
+https://f4e2796a-7069-4841-9c32-bf436d468d6b-00-23y1si41c2dem.kirk.replit.dev/quantum-code
 
 > AI + Quantum-powered procurement optimization platform for intelligent supplier selection and cost-efficient decision making.
 
